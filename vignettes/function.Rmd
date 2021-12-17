@@ -1,0 +1,64 @@
+---
+title: "function"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{function}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(StatComp21034)
+```
+
+# usage of the functions
+
+## sde_euler
+
+Simulation of gbm with euler method.
+```{r}
+a<-1.2
+b<-0.5
+t<-1
+x0<-1
+x<-sde_euler(a,b,x0,t,0.01)
+y<-seq(0,t,0.01)[1:length(x)]
+plot(y,x,type="l")
+```
+
+## sde_milstein
+
+Simulation of gbm with milstein method.
+
+```{r}
+x<-sde_milstein(a,b,x0,t,0.01)
+y<-seq(0,t,0.01)[1:length(x)]
+plot(y,x,type="l")
+```
+
+## sde_taylor
+
+Simulation of gbm with more R() in taylor series.
+
+```{r}
+x<-sde_taylor(a,b,x0,t,0.01)
+y<-seq(0,t,0.01)[1:length(x)]
+plot(y,x,type="l")
+```
+
+## converge_order
+
+To get the convergence order of simulation with different method.
+```{r}
+N<-100000
+converge_order(N,a,b,x0,t,"euler")
+converge_order(N,a,b,x0,t,"milstein")
+converge_order(N,a,b,x0,t,"taylor")
+```

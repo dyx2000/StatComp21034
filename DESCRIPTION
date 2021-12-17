@@ -1,0 +1,17 @@
+Package: StatComp21034
+Type: Package
+Title: Final homework for 'Statistical Computing' course
+Version: 1.0
+Date: 2021-12-15
+Author: 21034
+Maintainer: 21034 <3075786306@qq.com>
+Description: Several R and Rcpp function are included in the package.
+License: GPL (>= 2)
+Imports: Rcpp, microbenchmark, knitr, rmarkdown
+LinkingTo: Rcpp
+Encoding: UTF-8
+RoxygenNote: 7.1.2
+VignetteBuilder: knitr
+URL: https://github.com/dyx2000/StatComp21034
+BugReports: https://github.com/dyx2000/StatComp21034/issues
+
