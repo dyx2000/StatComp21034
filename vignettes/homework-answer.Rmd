@@ -24,14 +24,14 @@ tables)
 ## Answer
 ### texts
 利用函数print输出文本“统计计算第一次作业”。
-```{r}
+```{r,eval=FALSE}
 print("统计计算第一次作业")
 ```
 
 
 ### figures
 生成10个标准正态分布的随机数，放入向量n中，并作出散点图。
-```{r}
+```{r,eval=FALSE}
 set.seed(0)
 n<-rnorm(10)
 plot(n)
@@ -40,14 +40,10 @@ plot(n)
 
 ### table
 ```{r}
-x <- 1:10
-y <- 11:20
-b <- lm(y ~ x)
-df <- summary(b)$coef
-print(df)
+x<-matrix(1:20,5,4)
 ```
 ```{r}
-knitr::kable(df)
+knitr::kable(x)
 ```
 
 
@@ -72,7 +68,7 @@ $$F(x)=\int_0^x{\frac{t}{\sigma^2}e^{-\frac{t^2}{2\sigma^2}}dt}\\=1-e^{-\frac{x^
 choose the inverse transform method:
 $$u=1-e^{-\frac{x^2}{2\sigma^2}},\\x=\sqrt{-2\sigma^2log(1-u)}.$$
 
-```{r}
+```{r,eval=FALSE}
 sigma<-c(0.1,0.5,2,5,10)#choose the value of sigma:0.1,0.5,2,5,10
 n<-1000
 par(mfrow=c(2,3))
@@ -101,7 +97,7 @@ mixtures
 Answer:
 \
 The value of $p_1$ should be about 0.5 to produce bimodal mixtures.
-```{r}
+```{r,eval=FALSE}
 n<-1000
 p1<-0.75
 p2<-1-p1
@@ -150,7 +146,7 @@ theoretical values:  $t=10$,
 $\lambda =0.5,\alpha =0.5,\beta=1$,$E(X)=2.5,Var(X)=5$\
 $\lambda =1,\alpha =1,\beta=1$,$E(X)=10,Var(X)=20$\
 $\lambda =5,\alpha =2,\beta=2$,$E(X)=200,Var(X)=1200$\
-```{r}
+```{r,eval=FALSE}
 lambda=c(0.5,1,5)
 alpha=c(0.5,1,2)
 beta=c(1,1,2)
@@ -179,7 +175,7 @@ Computating with R).
 ### 5.4: 
 $$\phi(x)=\int_0^x{\frac{1}{B(\alpha,\beta)}t^{\alpha-1}(1-t)^{\beta-1}}dt\\=30\int_0^x{t^2(1-t)^2}dt$$
 $$\theta=\frac{30}{m}\sum_{i=1}^{m}{xU_i^2(1-U_i)^2},U_i\sim U(0,x)$$
-```{r}
+```{r,eval=FALSE}
 beta.mc<-function(x){
   m<-1e4
   u<-runif(m,min=0,max=x)
@@ -197,7 +193,7 @@ for (i in 1:9) {
 ### 5.9: 
 $$\phi(x)=\int_0^x{\frac{t}{\sigma^2}e^{-\frac{t^2}{2\sigma^2}}dt}$$
 $$\theta=\frac{1}{m}\sum_{i=1}^{m/2}{(\frac{xU_i}{\sigma^2}e^{-\frac{U_i^2}{2\sigma^2}}+\frac{x(x-U_i)}{\sigma^2}e^{-\frac{(x-U_i)^2}{2\sigma^2}})},U_i\sim U(0,x)$$ 
-```{r}
+```{r,eval=FALSE}
 # antithetic variables
 Ray.antithetic<-function(x,sigma){
   m<-1e4
@@ -217,7 +213,7 @@ Ray.simple<-function(x,sigma){
   return(list(theta.simp=theta,variance.simp=variance))
 }
 ```
-```{r}
+```{r,eval=FALSE}
 #x=4,sigma=1
 t<-Ray.antithetic(4,1)
 cat("antithetic variables:\n","mean: ",t$theta.anti,"variance: ",t$variance.anti,"\n")
@@ -225,7 +221,7 @@ s<-Ray.simple(4,1)
 cat("Simple Monte Carlo estimator:\n","mean: ",s$theta.simp,"variance: ",s$variance.simp,"\n")
 cat("percent reduction: ",1-t$variance.anti/s$variance.simp,"\n")
 ```
-```{r}
+```{r,eval=FALSE}
 #x=2,sigma=2
 t<-Ray.antithetic(3,2)
 cat("antithetic variables:\n","mean: ",t$theta.anti,"variance: ",t$variance.anti,"\n")
@@ -233,7 +229,7 @@ s<-Ray.simple(3,2)
 cat("Simple Monte Carlo estimator:\n","mean: ",s$theta.simp,"variance: ",s$variance.simp,"\n")
 cat("percent reduction: ",1-t$variance.anti/s$variance.simp,"\n")
 ```
-```{r}
+```{r,eval=FALSE}
 #x=6,sigma=3
 t<-Ray.antithetic(6,4)
 cat("antithetic variables:\n","mean: ",t$theta.anti,"variance: ",t$variance.anti,"\n")
@@ -247,7 +243,7 @@ cat("percent reduction: ",1-t$variance.anti/s$variance.simp,"\n")
 plot the curve of different functions\
 according to the plot,$f_2(x)=\frac{1}{\sqrt{2\pi}}e^{-\frac{(x-1)^2}{2}}$should produce the smaller variance, because the curve of this function is nearer to the function given.\
 The result shows that the variance of $f_2$ is about 70% of the other.
-```{r}
+```{r,eval=FALSE}
 g<-function(x) x^2*exp(-x^2/2)/sqrt(2*pi)*(x>1)
 f1<- function(x) exp(-x)
 f2<-function(x) exp(-((x-1)^2)/2)/sqrt(2*pi)
@@ -263,7 +259,7 @@ x<-seq(1.01,6,0.01)
     legend("topright", legend = gs,
            lty = 1:6,  inset = 0.02,col=1:6)
 ```
-```{r}
+```{r,eval=FALSE}
 #f1
 m<-1e4
 u<-vector()
@@ -271,7 +267,7 @@ u<-rexp(m)
 x<-g(u)/f1(u)
 cat("f1:\n","mean: ",mean(x),"sd: ",sd(x)/sqrt(m))
 ```
-```{r}
+```{r,eval=FALSE}
 #f2
 m<-1e4
 u<-rnorm(m,1,1)
@@ -281,7 +277,7 @@ cat("f2:\n","mean: ",mean(x),"sd: ",sd(x)/sqrt(m))
 
 ### 5.14
 The process is the same as that in exercise 5.13.
-```{r}
+```{r,eval=FALSE}
 m<-1e4
 u<-rnorm(m,1,1)
 x<-g(u)/f2(u)
@@ -312,7 +308,7 @@ test or McNemar test? Why?
 t-interval:\
 $$T^*=\frac{\overline X-500}{S/\sqrt{20}} \sim t(19)$$
 $$\mu=E\chi^2(2)=2$$
-```{r}
+```{r,eval=FALSE}
 n<-20
 alpha<-0.05
 sup<-vector()
@@ -333,7 +329,7 @@ mean((2<=sup)*(2>=inf))
 compare with Ex6.4:/
 The interval of variance performs badly when the data is non-normal.Although the covering rate of t-interval is lower than 0.95,it performs better than the interval of vaicance.That's to say,the t-interval is more robust to
 departures from normality than the interval for variance.
-```{r}
+```{r,eval=FALSE}
 #normal
 UCL<-replicate(1000,expr = {
   x<-rnorm(n,0,2)
@@ -350,7 +346,7 @@ print("non-normal:")
 mean(UCL>4)
 ```
 ### 6.A: 
-```{r}
+```{r,eval=FALSE}
 #(i)
 n<-20
 alpha=.05
@@ -373,7 +369,7 @@ print(c(p.hat,se.hat))
 #print mean and standard varicance
 ```
 
-```{r}
+```{r,eval=FALSE}
 #(ii)
 mu0<-1
 #true mean value
@@ -392,7 +388,7 @@ print(c(p.hat,se.hat))
 #print mean and standard varicance
 ```
 
-```{r}
+```{r,eval=FALSE}
 #(iii)
 mu0<-1
 #true mean value
@@ -450,7 +446,7 @@ Exercises 6.C (pages 182, Statistical Computating with R).
 ## Answer
 ### 6.C: 
 ### 6.8
-```{r}
+```{r,eval=FALSE}
 # generate samples as Ex6.16
 # small samples: n=20
 #Count Five test
@@ -492,7 +488,7 @@ power.ma<-mean(matest)
 cat("n=",n,"\n")
 round(c(Ftest=power.ft,CountFive=power.cf,Mardia=power.ma),3)
 ```
-```{r}
+```{r,eval=FALSE}
 # generate samples as Ex6.16
 # middle samples: n=50
 #Count Five test
@@ -534,7 +530,7 @@ power.ma<-mean(matest)
 cat("n=",n,"\n")
 round(c(Ftest=power.ft,CountFive=power.cf,Mardia=power.ma),3)
 ```
-```{r}
+```{r,eval=FALSE}
 # generate samples as Ex6.16
 # big samples: n=200
 #Count Five test
@@ -580,7 +576,7 @@ Comparison:\
 F test performed badly under three value of n.The power of Mardia stays around 0.5 always.The power of Countfive grows as n increases.It is lower than that of Mardia at n=20,and higher at n=50 and n=200.
 
 ### 6.10
-```{r}
+```{r,eval=FALSE}
 #n=c(10,20,30,50,100,500)
 alpha <- 0.05
 mu<-0
@@ -619,7 +615,7 @@ Computating with R)
 
 ## Answer
 ### 7.7
-```{r}
+```{r,eval=FALSE}
 library(bootstrap)
 library(boot)
 set.seed(12345)
@@ -635,7 +631,7 @@ se=sd(obj$t)),3)
 ```
 
 ### 7.8
-```{r}
+```{r,eval=FALSE}
 n<-length(scor[,1])
 theta.jack <- numeric(n)
 theta.hat <- b.comp(scor,1:n)
@@ -649,7 +645,7 @@ se.jack=se.jack),3)
 ```
 
 ### 7.9
-```{r}
+```{r,eval=FALSE}
 ci.perc<-ci.bca<-numeric(2)
 
 de <- boot(data=scor,statistic=b.comp,R=1000)
@@ -662,7 +658,7 @@ cat('bca lower=',ci.bca[1],'bca upper=',ci.bca[2])
 ```
 
 ### 7.B
-```{r}
+```{r,eval=FALSE}
 #computes the sample skewness coeff.
 sk <- function(y,i) {
   x<-y[i]
@@ -672,7 +668,7 @@ m2 <- mean((x - xbar)^2)
 return( m3 / m2^1.5 )
 }
 ```
-```{r}
+```{r,eval=FALSE}
 #normal populations: mean=1, sd=1
 mu<-1
 sd<-1
@@ -703,7 +699,7 @@ cat('norm =',mean(ci.norm[,2]<=sknormal),
 'basic =',mean(ci.basic[,2]<=sknormal),
 'perc =',mean(ci.perc[,2]<=sknormal))
 ```
-```{r}
+```{r,eval=FALSE}
 #χ2(5) distributions
 skchi<-sqrt(8/5)
 n<-1e1;m<-1e3
@@ -751,7 +747,7 @@ Note: The parameters should be chosen such that the powers
 are distinguishable (say, range from 0.3 to 0.8).
 ## Answer
 ### 8.2
-```{r}
+```{r,eval=FALSE}
 set.seed(1)
 x<-rnorm(10,0,1)
 y<-rnorm(10,0,1)
@@ -770,7 +766,7 @@ round(c(p,cor.test(x,y,method = "spearman")$p.value),3)
 ```
 Design experiments for evaluating the performance of the NN,
 energy, and ball methods in various situations.\
-```{r}
+```{r,eval=FALSE}
 library(RANN) # implementing a fast algorithm
 # for locating nearest neighbors
 # (alternative R package: "yaImpute")
@@ -798,7 +794,7 @@ eqdist.nn <- function(z,sizes,k){
 }
 ```
 (1)Unequal variances and equal expectations\
-```{r}
+```{r,eval=FALSE}
 m <- 1e2; k<-3; set.seed(12345);p=2
 n1 <- n2 <- 10; R<-99; n <- n1+n2; N = c(n1,n2)
 
@@ -816,7 +812,7 @@ pow <- colMeans(p.values<alpha)
 pow
 ```
 (2)Unequal variances and unequal expectations\
-```{r}
+```{r,eval=FALSE}
 p.values <- matrix(NA,m,3)
 for(i in 1:m){
 x <- matrix(rnorm(n1*p,0,1),ncol=p);
@@ -831,7 +827,7 @@ pow <- colMeans(p.values<alpha)
 pow
 ```
 (3)Non-normal distributions: t distribution with 1 df (heavy-tailed distribution), bimodel distribution (mixture of two normal distributions)\
-```{r}
+```{r,eval=FALSE}
 p.values <- matrix(NA,m,3)
 for(i in 1:m){
 x <- matrix(rt(n1*p,1,0.5),ncol=p);
@@ -846,7 +842,7 @@ pow <- colMeans(p.values<alpha)
 pow
 ```
 (4)Unbalanced samples (say, 1 case versus 10 controls)\
-```{r}
+```{r,eval=FALSE}
 n1<-5
 n2<-50
 N<-c(n1,n2)
@@ -880,7 +876,7 @@ Rˆ < 1.2. \
 
 ## Answer
 ### 9.3
-```{r}
+```{r,eval=FALSE}
 theta = 1
 eta = 0
 m = 10000
@@ -905,7 +901,7 @@ for (i in 2:m) {
 }
 print(k)
 ```
-```{r}
+```{r,eval=FALSE}
 b<-1001
 y<-x1[b:m]
 a<-ppoints(100)
@@ -917,7 +913,7 @@ lines(QR,f(QR))
 ```
 
 ### 9.8
-```{r}
+```{r,eval=FALSE}
 n = 100
 a = 25
 b = 50
@@ -935,7 +931,7 @@ for (i in 2:m) {
 X2<-x2
 x2<-x2[1001:m,]
 ```
-```{r}
+```{r,eval=FALSE}
 # compare sample statistics to parameters
 colMeans(x2)
 cov(x2)
@@ -948,7 +944,7 @@ For each of the above exercise, use the Gelman-Rubin method
 to monitor convergence of the chain, and run the chain until it
 converges approximately to the target distribution according to
 Rˆ < 1.2. 
-```{r}
+```{r,eval=FALSE}
 Gelman.Rubin <- function(psi) {
 # psi[i,j] is the statistic psi(X[i,1:j])
 # for chain in i-th row of X
@@ -965,7 +961,7 @@ return(r.hat)
 }
 ```
 
-```{r}
+```{r,eval=FALSE}
 chain1 <- function(N, X1) {
 #generates a Metropolis chain for Normal(0,1)
 #with Normal(X[t], sigma) proposal distribution
@@ -1069,7 +1065,7 @@ distribution)\
 
 ## Answer
 ### 11.3
-```{r}
+```{r,eval=FALSE}
 a = c(1,2)
 n = 200
 #fa is the function required in (a)
@@ -1089,7 +1085,7 @@ fb<-function(a){
 fb(a)
 ```
 ### 11.5
-```{r}
+```{r,eval=FALSE}
 #the result in 11.4
 func.A<- function(k){
   #func.A is the function to find the intersection
@@ -1106,7 +1102,7 @@ func.A<- function(k){
   return(uniroot(f, interval = c(0.001, sqrt(k)-0.001))$root)
 }
 ```
-```{r}
+```{r,eval=FALSE}
 #4:25
 result4_25<-vector()
 for (i in 4:25) {
@@ -1121,7 +1117,7 @@ func.A(500)
 func.A(1000)
 ```
 
-```{r}
+```{r,eval=FALSE}
 #the result in 11.5
 func.B<-function (k) {
   coeff<-function(n){
@@ -1156,7 +1152,7 @@ func.B<-function (k) {
   return(r)
 }
 ```
-```{r}
+```{r,eval=FALSE}
 #4:25
 result4_25<-vector()
 for (i in 4:25) {
@@ -1188,7 +1184,7 @@ $p_{i2}=I(Y_i=\tau)$
 ```{r}
 Y<-c(0.54, 0.48, 0.33, 0.43, 1.00, 1.00, 0.91, 1.00, 0.21, 0.85)
 ```
-```{r}
+```{r,eval=FALSE}
 N <- 10000 #max. number of iterations
 theta<-1
 z<-rep(1,10)
@@ -1209,7 +1205,7 @@ Excecises 1 and 7 (page 214, Advanced R)
 ## Answer
 ### Exercise 1
 Why are the following two invocations of lapply() equivalent?\
-```{r}
+```{r,eval=FALSE}
 trims <- c(0, 0.1, 0.2, 0.5)
 x <- rcauchy(100)
 lapply(trims, function(trim) mean(x, trim = trim))
@@ -1221,7 +1217,7 @@ mean() needs two variables: x and trim.Both the two expressions fix the x to be 
 \
 For each model in the previous two exercises, extract R2 using
 the function below.
-```{r}
+```{r,eval=FALSE}
 #model in exercise 3
 formulas <- list(
 mpg ~ disp,
@@ -1264,13 +1260,13 @@ lapply(listtotal, function(fit) lapply(fit, rsq))
 \
 Use vapply() to:\
 a) Compute the standard deviation of every column in a numeric data frame.\
-```{r}
+```{r,eval=FALSE}
 vapply(mtcars, sd,numeric(1))
 ```
 b) Compute the standard deviation of every numeric column
 in a mixed data frame. (Hint: you’ll need to use vapply()
 twice.)\
-```{r}
+```{r,eval=FALSE}
 df_sd <- function(df) vapply(df[vapply(df, is.numeric, logical(1))], sd, numeric(1))
 df_sd(iris)
 ```

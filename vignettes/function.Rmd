@@ -57,7 +57,7 @@ plot(y,x,type="l")
 
 To get the convergence order of simulation with different method.
 ```{r}
-N<-100000
+N<-10000
 converge_order(N,a,b,x0,t,"euler")
 converge_order(N,a,b,x0,t,"milstein")
 converge_order(N,a,b,x0,t,"taylor")
